@@ -388,9 +388,9 @@ def show_help():
     print(f"    {colorize('--json',CYAN)}        Dump findings to hisslock_report.json")
     print(f"    {colorize('-h, --help',  CYAN)}    Show help menu\n")
     print(colorize("  DETECTS", BOLD))
-    print("   AWS/GCP/GitHub keys · Hardcoded passwords · eval/exec")
-    print("   Internal API endpoints · Bearer tokens · Private API keys") 
-    print("   Weak hashes · SSL bypasses · Debug flags · and more\n")
+    print("   AWS/GCP/GitHub keys · Hardcoded passwords · eval/exec") # nosec
+    print("   Internal API endpoints · Bearer tokens · Private API keys") # nosec
+    print("   Weak hashes · SSL bypasses · Debug flags · and more\n") # nosec
     print(colorize("  EXAMPLES", BOLD))
     print(f"    {colorize('$', DIM)} python hisslock.py --path ./myproject")
     print(f"    {colorize('$', DIM)} python hisslock.py --path secrets.env --json\n")
