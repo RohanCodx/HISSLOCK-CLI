@@ -54,10 +54,10 @@ RULES = [
         "tip": "OpenAI Project API Key exposed! Revoke it instantly from the OpenAI Developer Dashboard.",
     },
     {
-        "name": "AWS Secret Access Key",
-        "pattern": re.compile(r'(?i)(?:aws_secret_access_key|aws_secret)[^=:]*[:=]\s*["\']?([A-Za-z0-9/+=]{40})["\']?'),
+        "name": "AWS Secret Access Key", # nosec
+        "pattern": re.compile(r'(?i)(?:aws_secret_access_key|aws_secret)[^=:]*[:=]\s*["\']?([A-Za-z0-9/+=]{40})["\']?'), # nosec
         "severity": "HIGH",
-        "tip": "Never commit AWS secrets. Use ~/.aws/credentials or Secrets Manager.",
+        "tip": "Never commit AWS secrets. Use ~/.aws/credentials or Secrets Manager.", # nosec
     },
     {
         "name": "Google API Key",
@@ -91,7 +91,7 @@ RULES = [
     },
     {
         "name": "RSA/OpenSSH Private Key Block",
-        "pattern": re.compile(r"-----BEGIN (?:RSA|DSA|EC|OPENSSH|PGP|PRIVATE) KEY-----"),
+        "pattern": re.compile(r"-----BEGIN (?:RSA|DSA|EC|OPENSSH|PGP|PRIVATE) KEY-----"), # nosec
         "severity": "HIGH",
         "tip": "Never hardcode private key blocks. Store them securely in a key manager.",
     },
@@ -126,7 +126,7 @@ RULES = [
         "tip": "Revoke Square token to prevent unauthorized point-of-sale transactions.",
     },
     {
-        "name": "Database URI with Password",
+        "name": "Database URI with Password", # nosec
         "pattern": re.compile(r"(?:postgres|mysql|mongodb(?:\+srv)?|redis)://[^:]+:[^@]+@[^/\s]+"),
         "severity": "HIGH",
         "tip": "Do not hardcode database credentials. Use a secure vault or env variables.",
@@ -138,28 +138,28 @@ RULES = [
         "tip": "Rotate Azure Storage keys immediately to protect cloud data.",
     },
     {
-        "name": "Use of eval()", 
-        "pattern": re.compile(r"eval\s*\("),
+        "name": "Use of eval()", # nosec
+        "pattern": re.compile(r"eval\s*\("), # nosec
         "severity": "HIGH",
-        "tip": "Replace eval() with ast.literal_eval() or a safer alternative.", 
+        "tip": "Replace eval() with ast.literal_eval() or a safer alternative.", # nosec
     },
     {
-        "name": "Use of exec()", 
-        "pattern": re.compile(r"exec\s*\("),
+        "name": "Use of exec()", # nosec
+        "pattern": re.compile(r"exec\s*\("), # nosec
         "severity": "HIGH",
-        "tip": "Avoid exec(). Refactor to explicit function calls.", 
+        "tip": "Avoid exec(). Refactor to explicit function calls.", # nosec
     },
     {
-        "name": "subprocess shell=True", 
+        "name": "subprocess shell=True", # nosec
         "pattern": re.compile(r"subprocess\.[a-zA-Z_0-9]+\([^)]*shell\s*=\s*True", re.IGNORECASE),
         "severity": "MEDIUM",
-        "tip": "Pass a list of args instead and remove shell=True to prevent injection.",
+        "tip": "Pass a list of args instead and remove shell=True to prevent injection.", # nosec
     },
     {
-        "name": "os.system() call", 
+        "name": "os.system() call", # nosec
         "pattern": re.compile(r"os\.system\s*\("),
         "severity": "MEDIUM",
-        "tip": "Use subprocess.run() with a list of arguments instead.",
+        "tip": "Use subprocess.run() with a list of arguments instead.", # nosec
     },
     {
         "name": "Pickle deserialisation",
@@ -168,10 +168,10 @@ RULES = [
         "tip": "Never unpickle data from untrusted sources. Use JSON or protobuf.",
     },
     {
-        "name": "Weak Hash Algorithm (MD5/SHA1)",
+        "name": "Weak Hash Algorithm (MD5/SHA1)", # nosec
         "pattern": re.compile(r"hashlib\.(?:md5|sha1)\s*\("),
         "severity": "MEDIUM",
-        "tip": "Use SHA-256 or stronger for security-sensitive hashing.",
+        "tip": "Use SHA-256 or stronger for security-sensitive hashing.", # nosec
     },
     {
         "name": "SSL Certificate Verification Disabled",
@@ -186,10 +186,10 @@ RULES = [
         "tip": "FTP transmits data in cleartext. Use SFTP (paramiko) or HTTPS instead."
     },
     {
-        "name": "Binding to 0.0.0.0",
+        "name": "Binding to 0.0.0.0", # nosec
         "pattern": re.compile(r'(["\'])0\.0\.0\.0\1'),
         "severity": "LOW",
-        "tip": "Bind only to the required interface (e.g. 127.0.0.1) in production.",
+        "tip": "Bind only to the required interface (e.g. 127.0.0.1) in production.", # nosec
     },
     {
         "name": "Debug Mode Enabled",
@@ -216,10 +216,10 @@ RULES = [
         "tip": "Revoke and regenerate this private key. Store it in a secrets manager.",
     },
     {
-        "name": "Authorization Bearer Token", 
+        "name": "Authorization Bearer Token", # nosec
         "pattern":re.compile(r'(?i)(?:["\']?Authorization["\']?\s*[:=]\s*)?["\']?Bearer\s+[A-Za-z0-9\-._~+/]+=*'),
         "severity": "HIGH",
-        "tip": "Never hardcode Bearer tokens. Inject them at runtime via env or vault.", 
+        "tip": "Never hardcode Bearer tokens. Inject them at runtime via env or vault.", # nosec
     },
     {
         "name": "X-API-Key / X-Private-Token Header",
