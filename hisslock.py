@@ -1,7 +1,7 @@
 import os, sys, re, argparse, json
 from datetime import datetime
-from concurrent.futures import ProcessPoolExecutor  # <-- मल्टी-प्रोसेसिंग के लिए जोड़ा गया
-
+from concurrent.futures import ProcessPoolExecutor 
+#----------colours----------
 RESET   = "\033[0m"
 BOLD    = "\033[1m"
 RED     = "\033[91m"
@@ -39,7 +39,7 @@ ANGRY_CAT = r"""
   I scan code faster than SpaceX rockets,
   Because I am Elon Musk's favorite cat!
 """
-
+#-----------------RULES ---------------
 RULES = [
     {
         "name": "AWS Access Key ID",
@@ -265,6 +265,8 @@ SEVERITY_COLOR = {
     "LOW":    CYAN   + BOLD,
 }
 
+# -------------------------scaning-------------------------------
+
 def scan_file(filepath):
     findings = []
     try:
@@ -309,6 +311,8 @@ def scan_file(filepath):
     except (OSError, PermissionError) as exc:
         print(colorize(f"  [SKIP] Cannot read '{filepath}': {exc}", DIM))
     return findings
+    
+#--------------------------files collecting---------------------------
 
 def collect_files(path):
     TEXT_EXTENSIONS = {
@@ -328,7 +332,7 @@ def collect_files(path):
             if ext.lower() in TEXT_EXTENSIONS or ext == "":
                 collected.append(os.path.join(root, filename))
     return sorted(collected)
-
+#-----------------------print-----------------------------
 def print_finding(finding):
     sev   = finding["severity"]
     color = SEVERITY_COLOR.get(sev, "")
@@ -428,10 +432,8 @@ def main():
     start_time   = datetime.now()
     all_findings = []
 
-    # यहाँ हुआ बदलाव: ProcessPoolExecutor का उपयोग 2 max_workers के साथ किया गया है
-    # यह एक फ़ाइल को स्कैन करते ही उसका रिजल्ट टर्मिनल पर प्रिंट कर देगा (Real-time tracking)
+#-----------------------------workers-----------------------------------
     with ProcessPoolExecutor(max_workers=2) as executor:
-        # सभी फ़ाइलों को 2 अलग-अलग प्रोसेस में समानांतर (parallel) सबमिट करना
         future_to_file = {executor.submit(scan_file, filepath): filepath for filepath in files}
         
         for future in future_to_file:
